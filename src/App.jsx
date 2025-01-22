@@ -15,9 +15,14 @@ function App() {
   const [formData, setFormData] = useState(initialFormData);
 
   const fetchPosts = () => {
-    axios.get(`${baseApiUrl}/posts`).then((res) => {
-      setPosts(res.data);
-    });
+    axios
+      .get(`${baseApiUrl}/posts`)
+      .then((res) => {
+        setPosts(res.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching posts:", error);
+      });
   };
 
   const imgErrHand = (e) => {
@@ -30,19 +35,29 @@ function App() {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault;
+    e.preventDefault();
     const tags = formData.tags.split(",").map((tag) => tag.trim());
     const newPost = { ...formData, tags: tags };
-    axios.post(`${baseApiUrl}/posts`, newPost).then((res) => {
-      fetchPosts();
-      setFormData(initialFormData);
-    });
+    axios
+      .post(`${baseApiUrl}/posts`, newPost)
+      .then((res) => {
+        fetchPosts();
+        setFormData(initialFormData);
+      })
+      .catch((error) => {
+        console.error("Error creating post:", error);
+      });
   };
 
   const deleteHand = (id) => {
-    axios.delete(`${baseApiUrl}/posts/${id}`).then(() => {
-      fetchPosts();
-    });
+    axios
+      .delete(`${baseApiUrl}/posts/${id}`)
+      .then(() => {
+        fetchPosts();
+      })
+      .catch((error) => {
+        console.error("Error deleting post:", error);
+      });
   };
 
   useEffect(() => {
