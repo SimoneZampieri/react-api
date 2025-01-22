@@ -1,5 +1,11 @@
+import Posts from ('./components/Posts')
+
 function App() {
-  return <></>;
+  return (
+    <>
+      <Posts />
+    </>
+  );
 }
 
 export default App;
