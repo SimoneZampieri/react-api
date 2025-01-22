@@ -75,6 +75,19 @@ function App() {
               <button type="submit" className="btn btn-warning">Vai!</button>
             </form>
           </div>
+          <div className="container my-4">
+            {posts.map(post => (
+              <div className="card" key={post.id}>
+              <img src={post.immagini} className="card-img-top" alt={post.titolo} onError={imgErrHand}>
+              <div className="card-body">
+                <h5 className="card-title">{post.titolo}</h5>
+                <p className="card-text">{post.didascalia}</p>
+                <p className="card-text">Tags:{post.tags.join(',')}</p>
+                <a href="#" class="btn btn-warning" onClick={() => deleteHand(post.id)}>Elimina Post</a>
+              </div>
+            </div>
+            ))}
+          </div>
         </div>
       </div>
     </>
