@@ -4,21 +4,24 @@ import axios from "axios";
 function App() {
   const initialFormData = {
     id: "",
-    titolo: "",
-    didascalia: "",
-    immagini: "",
+    title: "",
+    content: "",
+    image: "",
     tags: [],
   };
 
-  const baseApiUrl = import.meta.VITE_BASE_API_URL;
+  const baseApiUrl = import.meta.env.VITE_BASE_API_URL;
   const [posts, setPosts] = useState([]);
   const [formData, setFormData] = useState(initialFormData);
 
-  const fetchPosts = () =>
-    axios.get(`${baseApiUrl}/posts`).then((res) => setPosts(res.data));
+  const fetchPosts = () => {
+    axios.get(`${baseApiUrl}/posts`).then((res) => {
+      setPosts(res.data);
+    });
+  };
 
   const imgErrHand = (e) => {
-    e.target.src = "https://picsum.photos/200/300";
+    e.target.src = "https://picsum.photos/100/100";
   };
 
   const inputHandler = (e) => {
@@ -30,23 +33,21 @@ function App() {
     e.preventDefault;
     const tags = formData.tags.split(",").map((tag) => tag.trim());
     const newPost = { ...formData, tags: tags };
-    axios.post(`${baseApiUrl}/posts`, newPost);
-    .then(res => {
-      fetchPosts()
-      setFormData(initialFormData)
-    })
+    axios.post(`${baseApiUrl}/posts`, newPost).then((res) => {
+      fetchPosts();
+      setFormData(initialFormData);
+    });
   };
 
-  const deleteHand = (id) =>{
-    axios.delete(`${baseApiUrl}/posts/${id}`)
-    .then(() => {
+  const deleteHand = (id) => {
+    axios.delete(`${baseApiUrl}/posts/${id}`).then(() => {
       fetchPosts();
     });
-  }
+  };
 
-  useEffect(() =>{
-    fetchPosts()
-  }, [])
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
   return (
     <>
@@ -57,35 +58,84 @@ function App() {
             <h3>Inserisci nuovo Post</h3>
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
-                <label htmlFor="titolo" className="form-control">Titolo</label>
-                <input type="text" className="form-control" id="titolo" name="titolo" value={formData.titolo} onChange={inputHandler}/> 
+                <label htmlFor="title" className="form-control">
+                  Titolo
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="title"
+                  name="title"
+                  value={formData.title}
+                  onChange={inputHandler}
+                />
               </div>
               <div className="mb-3">
-                <label htmlFor="didascalia" className="form-control">Didascalia</label>
-                <input type="text" className="form-control" id="didascalia" name="didascalia" value={formData.didascalia} onChange={inputHandler}/>
+                <label htmlFor="content" className="form-control">
+                  Didascalia
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="content"
+                  name="content"
+                  value={formData.content}
+                  onChange={inputHandler}
+                />
               </div>
               <div className="mb-3">
-                <label htmlFor="immagini" className="form-control">Link Immagine</label>
-                <input type="text" className="form-control" id="immagini" name="immagini" value={formData.immagini} onChange={inputHandler}/>
+                <label htmlFor="image" className="form-control">
+                  Link Immagine
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="image"
+                  name="image"
+                  value={formData.image}
+                  onChange={inputHandler}
+                />
               </div>
               <div className="mb-3">
-                <label htmlFor="tags" className="form-control">Tags</label>
-                <input type="text" className="form-control" id="tags" name="tags" value={formData.tags} onChange={inputHandler}/>
+                <label htmlFor="tags" className="form-control">
+                  Tags
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="tags"
+                  name="tags"
+                  value={formData.tags}
+                  onChange={inputHandler}
+                />
               </div>
-              <button type="submit" className="btn btn-warning">Vai!</button>
+              <button type="submit" className="btn btn-warning">
+                Vai!
+              </button>
             </form>
           </div>
           <div className="container my-4">
-            {posts.map(post => (
+            {posts.map((post) => (
               <div className="card" key={post.id}>
-              <img src={post.immagini} className="card-img-top" alt={post.titolo} onError={imgErrHand}>
-              <div className="card-body">
-                <h5 className="card-title">{post.titolo}</h5>
-                <p className="card-text">{post.didascalia}</p>
-                <p className="card-text">Tags:{post.tags.join(',')}</p>
-                <a href="#" class="btn btn-warning" onClick={() => deleteHand(post.id)}>Elimina Post</a>
+                <img
+                  src={post.image}
+                  className="card-img-top"
+                  alt={post.title}
+                  onError={imgErrHand}
+                ></img>
+                <div className="card-body">
+                  <h5 className="card-title">{post.title}</h5>
+                  <p className="card-text">{post.content}</p>
+                  <p className="card-text">Tags:{post.tags.join(",")}</p>
+                  <a
+                    href="#"
+                    className="btn btn-warning"
+                    onClick={() => deleteHand(post.id)}
+                  >
+                    Elimina Post
+                  </a>
+                </div>
               </div>
-            </div>
             ))}
           </div>
         </div>
