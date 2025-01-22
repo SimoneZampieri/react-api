@@ -17,6 +17,11 @@ function App() {
   const fetchPosts = () =>
     axios.get(`${baseApiUrl}/posts`).then((res) => setPosts(res.data));
 
+  const inputHandler = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
   return (
     <>
       <div className="container">
