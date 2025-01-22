@@ -37,11 +37,30 @@ function App() {
     })
   };
 
+  const deleteHand = (id) =>{
+    axios.delete(`${baseApiUrl}/posts/${id}`)
+    .then(() => {
+      fetchPosts();
+    });
+  }
+
+  useEffect(() =>{
+    fetchPosts()
+  }, [])
+
   return (
     <>
       <div className="container">
         <h1>Elenco Post</h1>
-        <div className="row"></div>
+        <div className="row">
+          <div className="container mt-4">
+            <h3>Inserisci nuovo Post</h3>
+            <form onSubmit={handleSubmit}>
+              <label htmlFor="titolo" className="form-control">Titolo</label>
+              <input type="text" className="form-control" id="titolo" name="titolo" value={formData.titolo}/>
+            </form>
+          </div>
+        </div>
       </div>
     </>
   );
