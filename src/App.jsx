@@ -56,8 +56,23 @@ function App() {
           <div className="container mt-4">
             <h3>Inserisci nuovo Post</h3>
             <form onSubmit={handleSubmit}>
-              <label htmlFor="titolo" className="form-control">Titolo</label>
-              <input type="text" className="form-control" id="titolo" name="titolo" value={formData.titolo}/>
+              <div className="mb-3">
+                <label htmlFor="titolo" className="form-control">Titolo</label>
+                <input type="text" className="form-control" id="titolo" name="titolo" value={formData.titolo} onChange={inputHandler}/> 
+              </div>
+              <div className="mb-3">
+                <label htmlFor="didascalia" className="form-control">Didascalia</label>
+                <input type="text" className="form-control" id="didascalia" name="didascalia" value={formData.didascalia} onChange={inputHandler}/>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="immagini" className="form-control">Link Immagine</label>
+                <input type="text" className="form-control" id="immagini" name="immagini" value={formData.immagini} onChange={inputHandler}/>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="tags" className="form-control">Tags</label>
+                <input type="text" className="form-control" id="tags" name="tags" value={formData.tags} onChange={inputHandler}/>
+              </div>
+              <button type="submit" className="btn btn-warning">Vai!</button>
             </form>
           </div>
         </div>
