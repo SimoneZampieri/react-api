@@ -142,13 +142,12 @@ function App() {
                   <h5 className="card-title">{post.title}</h5>
                   <p className="card-text">{post.content}</p>
                   <p className="card-text">Tags:{post.tags.join(",")}</p>
-                  <a
-                    href="#"
+                  <button
                     className="btn btn-warning"
                     onClick={() => deleteHand(post.id)}
                   >
                     Elimina Post
-                  </a>
+                  </button>
                 </div>
               </div>
             ))}
